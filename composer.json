@@ -16,9 +16,13 @@
     },
     "require": {
         "php": "^8.1",
+        "bowphp/cqrs": "^1.0",
         "bowphp/framework": "^5.0",
         "bowphp/meta-manager": "^1.0",
-        "bowphp/policier": "^2.1"
+        "bowphp/policier": "^2.1",
+        "php-fp/php-fp-either": "^1.0",
+        "prewk/result": "^3.1",
+        "ramsey/uuid": "^4.7"
     },
     "require-dev": {
         "phpunit/phpunit": "^8",
@@ -34,7 +38,7 @@
         ]
     },
     "scripts": {
-        "lint": "phpcbf --standard=psr12 --tab-width=4 app tests config migrations seeders routes",
+        "lint": "phpcbf --standard=psr12 --tab-width=4 app tests config routes",
         "test": "phpunit --configuration phpunit.xml",
         "post-root-package-install": [
             "@php -r \"file_exists('.env.json') || copy('.env.example.json', '.env.json');\""

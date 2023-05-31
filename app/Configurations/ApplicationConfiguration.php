@@ -2,8 +2,13 @@
 
 namespace App\Configurations;
 
+use Bow\CQRS\Registration;
 use Bow\Configuration\Loader;
 use Bow\Configuration\Configuration;
+use App\Commands\ExecuteDepositCommand;
+use App\Commands\ExecuteTransferCommand;
+use App\Commands\ExecuteDepositCommandHandler;
+use App\Commands\ExecuteTransferCommandHandler;
 
 class ApplicationConfiguration extends Configuration
 {
@@ -15,7 +20,10 @@ class ApplicationConfiguration extends Configuration
      */
     public function create(Loader $config): void
     {
-        // Event::on("user.created", UserCreatedListener::class);
+        Registration::commands([
+            ExecuteDepositCommand::class => ExecuteDepositCommandHandler::class,
+            ExecuteTransferCommand::class => ExecuteTransferCommandHandler::class
+        ]);
     }
 
     /**

@@ -12,7 +12,7 @@ class RequestCsrfMiddleware extends CsrfMiddleware
     public function preventOn(): array
     {
         return [
-            // Add the route pattern for escape the X-CSRF checker
+            "/"
         ];
     }
 }
