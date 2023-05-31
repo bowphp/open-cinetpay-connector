@@ -85,7 +85,7 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
         }
 
         // Run the request
-        $response = $this->http_client->post("https://client.cinetpay.com/v1/auth/login", [
+        $response = $this->http_client->post(app_env("CINETPAY_TRANSFER_TOKEN"), [
             "apikey" => app_env("CINETPAY_KEY"),
             "password" => app_env("CINETPAY_TRANSFER_PASSWORD"),
         ]);
