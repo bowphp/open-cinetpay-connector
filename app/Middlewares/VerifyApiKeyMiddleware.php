@@ -2,11 +2,11 @@
 
 namespace App\Middlewares;
 
-use Bow\Auth\Auth;
+use Bow\Http\Exception\ForbiddenException;
 use Bow\Http\Request;
 use Bow\Middleware\BaseMiddleware;
 
-class GuestMiddleware implements BaseMiddleware
+class VerifyApiKeyMiddleware implements BaseMiddleware
 {
     /**
      * Launch function of the middleware.
@@ -18,11 +18,15 @@ class GuestMiddleware implements BaseMiddleware
      */
     public function process(Request $request, callable $next, array $args = []): mixed
     {
-        if (Auth::getInstance()->guest()) {
+        $api_key = $request->getHeader("X-Api-Key");
+
+        if (app_env("API_KEY") == $api_key) {
             return $next($request);
         }
 
-        return redirect($this->redirectTo());
+        throw new ForbiddenException(
+            "Access denied"
+        );
     }
 
     /**
