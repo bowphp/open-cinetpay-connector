@@ -14,14 +14,14 @@ $app->post("execute-transfer-transaction", [
     TransactionController::class, "executeTransferTransaction"
 ])->middleware(["verify-token"]);
 
-$app->post("webhook/deposits", [
-    WebhookController::class => "processDepositWebhook"
+$app->post("webhook/deposits/:session", [
+    WebhookController::class, "processDepositWebhook"
 ])->name("deposit.webhook");
 
-$app->post("webhook/transfers", [
-    WebhookController::class => "processTransferWebhook"
+$app->post("webhook/transfers/:session", [
+    WebhookController::class, "processTransferWebhook"
 ])->name("transfer.webhook");
 
 $app->post("redirects/:session", [
-    StatusController::class => "processSession"
+    StatusController::class, "processSession"
 ])->name("app.redirect");
