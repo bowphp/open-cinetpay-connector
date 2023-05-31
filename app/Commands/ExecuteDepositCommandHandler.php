@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use Prewk\Result\Ok;
 use Prewk\Result\Err;
+use Ramsey\Uuid\Uuid;
 use Bow\Http\Client\HttpClient;
 use Bow\CQRS\Command\CommandInterface;
 use Bow\CQRS\Command\CommandHandlerInterface;
@@ -29,16 +30,20 @@ class ExecuteDepositCommandHandler implements CommandHandlerInterface
      */
     public function process(CommandInterface $command): mixed
     {
-        $payload = [
-            "apikey" => app_env("CINETPAY_API_KEY"),
+        $credentials = [
+            "apikey" => app_env("CINETPAY_KEY"),
             "site_id" => app_env("CINETPAY_SITE_ID"),
-            "secret_key" => app_env("CINETPAY_API_SECRET"),
+        ];
+
+        $session = (string) Uuid::uuid4();
+
+        $payload = [
             "transaction_id" => $command->transaction,
             "amount" => $command->amount,
             "currency" => $command->currency,
             "description" => "{$command->amount}{$command->currency} for garba",
-            "notify_url" => route("app.webhook.status", true),
-            "return_url" => route("app.webhook.redirect", true),
+            "notify_url" => route("deposit.webhook", compact("session"), true),
+            "return_url" => route("app.redirect", compact("session"), true),
             "channels" => "MOBILE_MONEY",
             "lang" => $command->lang ?? "fr",
             "lock_phone_number" => true,
@@ -49,7 +54,10 @@ class ExecuteDepositCommandHandler implements CommandHandlerInterface
         ];
 
         // Run the request
-        $response = $this->http_client->acceptJson()->post(app_env('CINETPAY_PAYMENT_URL'), $payload);
+        $response = $this->http_client->acceptJson()->post(
+            app_env("CINETPAY_PAYMENT_URL"),
+            array_merge($payload, $credentials)
+        );
 
         if ($response->statusCode() !== 200) {
             $error = $response->toArray();
@@ -60,6 +68,11 @@ class ExecuteDepositCommandHandler implements CommandHandlerInterface
             );
         }
 
-        return new Ok($response->toJson());
+        $content = $response->toJson();
+        $content->status = "pending";
+
+        cache("deposit:" . $session, array_merge($payload, (array) $content));
+
+        return new Ok($content);
     }
 }

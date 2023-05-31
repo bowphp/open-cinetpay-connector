@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "default" => "file",
+    "default" => app_env("CACHE_DRIVER"),
 
     "stores" => [
         "file" => [
@@ -24,7 +24,7 @@ return [
             'username' => app_env('REDIS_USERNAME'),
             'password' => app_env('REDIS_PASSWORD'),
             'database' => app_env('REDIS_CACHE_DB', '1'),
-            "prefix" => "__app__",
+            "prefix" => app_env("REDIS_PREFIX"),
         ]
     ]
 ];

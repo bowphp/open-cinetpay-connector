@@ -4,7 +4,7 @@ namespace App\Validations;
 
 use Bow\Validation\RequestValidation;
 
-class DepositTransctionValidationRequest extends RequestValidation
+class TransferTransctionValidationRequest extends RequestValidation
 {
     /**
      * Validation rules
@@ -16,8 +16,8 @@ class DepositTransctionValidationRequest extends RequestValidation
         return [
             "transaction" => "required",
             "amount" => "required",
-            "currency" => "required",
-            "msisdn" => "required",
+            "phone" => "required",
+            "method" => "required",
         ];
     }
 
