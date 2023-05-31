@@ -33,7 +33,7 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
         $token = $this->generateToken();
 
         $this->createCustomer($command, $token);
-    
+
         $payload = [
             "prefix" => $command->phone->prefix,
             "phone" => $command->phone->number,
