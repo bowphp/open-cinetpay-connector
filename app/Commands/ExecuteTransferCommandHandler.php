@@ -57,7 +57,7 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
             }
 
             return new Err(
-                new InternalServerErrorException(
+                new BadRequestException(
                     $error["error"] ?? $error["description"]
                 )
             );
