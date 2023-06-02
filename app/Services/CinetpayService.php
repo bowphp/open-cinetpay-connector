@@ -42,7 +42,7 @@ class CinetpayService
         $cpm_version = $attributes["cpm_version"];
         $cpm_payment_config = $attributes["cpm_payment_config"];
         $cpm_page_action = $attributes["cpm_page_action"];
-        $cpm_custom = $attributes["cpm_custom"];
+        $cpm_custom = $attributes["cpm_custom"] ?? '';
         $cpm_designation = $attributes["cpm_designation"];
         $cpm_error_message = $attributes["cpm_error_message"];
 

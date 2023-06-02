@@ -16,7 +16,8 @@ class DispatchTransferWebhookCommandhandler implements CommandHandlerInterface
         public HttpClient $http_client
     ) {
         $this->http_client->addHeaders([
-            "X-Api-Key" => app_env("DJEKANOO_API_KEY")
+            "X-Api-Key" => app_env("DJEKANOO_API_KEY"),
+            "User-Agent" => app_env("APP_NAME"),
         ]);
     }
 
@@ -31,7 +32,7 @@ class DispatchTransferWebhookCommandhandler implements CommandHandlerInterface
         $response = $this->http_client->acceptJson()->post(app_env("DJEKANOO_TRANSFER_URL"), [
             "transaction" => $command->transaction,
             "amount" => $command->amount,
-            "status" => $command->status,
+            "status" => $command->status == "SUCCES" ? "completed" : "failed",
             "provider" => [
                 "name" => "cinetpay",
                 "data" => $command->provider_data
@@ -39,9 +40,10 @@ class DispatchTransferWebhookCommandhandler implements CommandHandlerInterface
         ]);
 
         if ($response->statusCode() !== 200) {
+            $error = $response->toJson();
             return new Err(
                 new BadRequestException(
-                    "Cannot contact the djekanoo api webhook"
+                    "Cannot contact the djekanoo api webhook: " . $error->message,
                 )
             );
         }
