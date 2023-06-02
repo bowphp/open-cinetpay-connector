@@ -7,6 +7,7 @@ use App\Controllers\Controller;
 use Bow\CQRS\Command\CommandBus;
 use App\Services\CinetpayService;
 use App\Commands\DispatchDepositWebhookCommand;
+use App\Commands\DispatchTransferWebhookCommand;
 
 class WebhookController extends Controller
 {
@@ -59,6 +60,22 @@ class WebhookController extends Controller
     public function processTransferWebhook(
         Request $request
     ) {
-        $x_token = $request->getHeader("X-Token");
+        $attributes = $request->all();
+
+        $this->cinetpay_service->checkHmacToken(
+            (string) $request->getHeader("X-Token"),
+            $attributes
+        );
+
+        $result = $this->commandBus->execute(
+            new DispatchTransferWebhookCommand(
+                $attributes["cpm_trans_id"],
+                $attributes["cpm_error_message"],
+                $attributes["cpm_amount"],
+                $attributes,
+            )
+        );
+
+        return $result->unwrap();
     }
 }

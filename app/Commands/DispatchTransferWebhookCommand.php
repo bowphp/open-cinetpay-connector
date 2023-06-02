@@ -4,7 +4,7 @@ namespace App\Commands;
 
 use Bow\CQRS\Command\CommandInterface;
 
-class DispatchDepositWebhookCommand implements CommandInterface
+class DispatchTransferWebhookCommand implements CommandInterface
 {
     public function __construct(
         public string $transaction,
