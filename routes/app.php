@@ -6,7 +6,7 @@ use App\Controllers\TransactionController;
 
 $app->get('status', StatusController::class)->name('app.status');
 
-$app->post("execute-deposit-transaction", [
+$app->post("generate-deposit-session", [
     TransactionController::class, "executeDepositTransaction"
 ])->middleware(["verify-token"]);
 

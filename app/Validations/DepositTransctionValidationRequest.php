@@ -17,7 +17,8 @@ class DepositTransctionValidationRequest extends RequestValidation
             "transaction" => "required",
             "amount" => "required",
             "currency" => "required",
-            "msisdn" => "required",
+            "phone_number" => "required|numeric",
+            "phone_prefix" => "required|numeric",
         ];
     }
 
@@ -38,8 +39,13 @@ class DepositTransctionValidationRequest extends RequestValidation
             "currency" => [
                 "required" => "The currency is require"
             ],
-            "msisdn" => [
-                "required" => "The msisdn is require"
+            "phone_prefix" => [
+                "required" => "The phone_prefix is require",
+                "numeric" => "The phone_prefix should be a numeric",
+            ],
+            "phone_number" => [
+                "required" => "The phone_number is require",
+                "numeric" => "The phone_number should be a numeric",
             ],
         ];
     }

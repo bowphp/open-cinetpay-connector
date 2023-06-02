@@ -50,7 +50,7 @@ class ExecuteDepositCommandHandler implements CommandHandlerInterface
             "customer_id" => $command->transaction,
             "customer_name" => $command->transaction,
             "customer_surname" => $command->transaction,
-            "customer_phone_number" => $command->msisdn
+            "customer_phone_number" => "+" . $command->phone->prefix . $command->phone->number
         ];
 
         // Run the request
@@ -69,10 +69,13 @@ class ExecuteDepositCommandHandler implements CommandHandlerInterface
         }
 
         $content = $response->toJson();
-        $content->status = "pending";
 
-        cache("deposit:" . $session, array_merge($payload, (array) $content));
+        $data = $content->data;
+        $data->status = "pending";
+        $data->api_response_id = $content->api_response_id;
 
-        return new Ok($content);
+        cache("deposit:" . $session, array_merge($payload, (array) $data));
+
+        return new Ok($data);
     }
 }

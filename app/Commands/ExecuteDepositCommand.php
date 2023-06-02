@@ -12,13 +12,13 @@ class ExecuteDepositCommand implements CommandInterface
      * @param string $transaction
      * @param float $amount
      * @param string $currency
-     * @param string $msisdn
+     * @param string $phone
      */
     public function __construct(
         public string $transaction,
         public float $amount,
         public string $currency,
-        public string $msisdn,
+        public object $phone,
     ) {
     }
 }

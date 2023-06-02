@@ -33,12 +33,17 @@ class TransactionController extends Controller
     public function executeDepositTransaction(
         DepositTransctionValidationRequest $request
     ) {
+        $phone = [
+            "prefix" => $request->get("phone_prefix"),
+            "number" => $request->get("phone_number"),
+        ];
+
         $result = $this->commandBus->execute(
             new ExecuteDepositCommand(
                 $request->get("transaction"),
                 $request->get("amount"),
                 $request->get("currency"),
-                $request->get("msisdn"),
+                (object) $phone,
             )
         );
 
@@ -54,30 +59,17 @@ class TransactionController extends Controller
     public function executeTransferTransaction(
         TransferTransctionValidationRequest $request
     ) {
-        $validation = Validator::make((array) $request->get("phone"), [
-            "prefix" => "required|number",
-            "number" => "required|number"
-        ], [
-            "prefix" => [
-                "required" => "The phone.prefix is required",
-                "number" => "The phone.prefix {prefix} should be number",
-            ],
-            "number" => [
-                "required" => "The phone.prefix is required",
-                "number" => "The phone.prefix {prefix} should be number",
-            ],
-        ]);
-
-        if ($validation->fails()) {
-            $validation->throwError();
-        }
+        $phone = [
+            "prefix" => $request->get("phone_prefix"),
+            "number" => $request->get("phone_number"),
+        ];
 
         $result = $this->commandBus->execute(
             new ExecuteTransferCommand(
                 $request->get("transaction"),
                 $request->get("amount"),
                 $request->get("method"),
-                (object) $request->get("phone"),
+                (object) $phone,
             )
         );
 
