@@ -50,7 +50,7 @@ class Kernel extends ApplicationLoader
     {
         return [
             'csrf' => \App\Middlewares\RequestCsrfMiddleware::class,
-            'verify-token' => \App\Middlewares\VerifyApiKeyMiddleware::class,
+            'verify-api-key' => \App\Middlewares\VerifyApiKeyMiddleware::class,
         ];
     }
 

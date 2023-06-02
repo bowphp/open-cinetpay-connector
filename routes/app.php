@@ -8,11 +8,11 @@ $app->get('status', StatusController::class)->name('app.status');
 
 $app->post("generate-deposit-session", [
     TransactionController::class, "executeDepositTransaction"
-])->middleware(["verify-token"]);
+])->middleware(["verify-api-key"]);
 
 $app->post("execute-transfer-transaction", [
     TransactionController::class, "executeTransferTransaction"
-])->middleware(["verify-token"]);
+])->middleware(["verify-api-key"]);
 
 $app->post("webhook/deposits/:session", [
     WebhookController::class, "processDepositWebhook"
