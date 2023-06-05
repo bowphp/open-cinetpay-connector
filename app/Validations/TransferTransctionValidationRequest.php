@@ -16,8 +16,9 @@ class TransferTransctionValidationRequest extends RequestValidation
         return [
             "transaction" => "required",
             "amount" => "required",
-            "phone" => "required",
             "method" => "required",
+            "phone_prefix" => "required|numeric",
+            "phone_number" => "required|numeric",
         ];
     }
 
@@ -38,8 +39,8 @@ class TransferTransctionValidationRequest extends RequestValidation
             "currency" => [
                 "required" => "The currency is require"
             ],
-            "msisdn" => [
-                "required" => "The msisdn is require"
+            "method" => [
+                "required" => "The method is require"
             ],
         ];
     }

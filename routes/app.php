@@ -6,22 +6,22 @@ use App\Controllers\TransactionController;
 
 $app->get('status', StatusController::class)->name('app.status');
 
-$app->post("execute-deposit-transaction", [
+$app->post("generate-deposit-session", [
     TransactionController::class, "executeDepositTransaction"
-])->middleware(["verify-token"]);
+])->middleware(["verify-api-key"]);
 
 $app->post("execute-transfer-transaction", [
     TransactionController::class, "executeTransferTransaction"
-])->middleware(["verify-token"]);
+])->middleware(["verify-api-key"]);
 
-$app->post("webhook/deposits", [
-    WebhookController::class => "processDepositWebhook"
+$app->post("webhook/deposits/:session", [
+    WebhookController::class, "processDepositWebhook"
 ])->name("deposit.webhook");
 
-$app->post("webhook/transfers", [
-    WebhookController::class => "processTransferWebhook"
+$app->post("webhook/transfers/:session", [
+    WebhookController::class, "processTransferWebhook"
 ])->name("transfer.webhook");
 
 $app->post("redirects/:session", [
-    StatusController::class => "processSession"
+    StatusController::class, "processSession"
 ])->name("app.redirect");
