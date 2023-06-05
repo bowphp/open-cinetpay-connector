@@ -7,12 +7,12 @@ use Bow\Configuration\Loader;
 use Bow\Configuration\Configuration;
 use App\Commands\ExecuteDepositCommand;
 use App\Commands\ExecuteTransferCommand;
-use App\Commands\ExecuteDepositCommandHandler;
 use App\Commands\DispatchDepositWebhookCommand;
-use App\Commands\ExecuteTransferCommandHandler;
 use App\Commands\DispatchTransferWebhookCommand;
-use App\Commands\DispatchDepositWebhookCommandhandler;
-use App\Commands\DispatchTransferWebhookCommandhandler;
+use App\CommandHandlers\ExecuteDepositCommandHandler;
+use App\CommandHandlers\ExecuteTransferCommandHandler;
+use App\CommandHandlers\DispatchDepositWebhookCommandhandler;
+use App\CommandHandlers\DispatchTransferWebhookCommandhandler;
 
 class ApplicationConfiguration extends Configuration
 {

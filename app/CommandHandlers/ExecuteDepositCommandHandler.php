@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\CommandHandlers;
 
 use Prewk\Result\Ok;
 use Prewk\Result\Err;

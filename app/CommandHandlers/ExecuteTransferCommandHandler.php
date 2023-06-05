@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Commands;
+namespace App\CommandHandlers;
 
 use Prewk\Result\Ok;
 use Prewk\Result\Err;
 use Ramsey\Uuid\Uuid;
 use Bow\Http\Client\HttpClient;
 use Bow\CQRS\Command\CommandInterface;
+use App\Commands\ExecuteTransferCommand;
 use Bow\Http\Exception\BadRequestException;
 use Bow\CQRS\Command\CommandHandlerInterface;
 use Bow\Http\Exception\InternalServerErrorException;

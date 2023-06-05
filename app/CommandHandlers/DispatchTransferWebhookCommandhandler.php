@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\CommandHandlers;
 
 use Prewk\Result;
 use Prewk\Result\Ok;
@@ -10,7 +10,7 @@ use Bow\CQRS\Command\CommandInterface;
 use Bow\Http\Exception\BadRequestException;
 use Bow\CQRS\Command\CommandHandlerInterface;
 
-class DispatchDepositWebhookCommandhandler implements CommandHandlerInterface
+class DispatchTransferWebhookCommandhandler implements CommandHandlerInterface
 {
     public function __construct(
         public HttpClient $http_client
@@ -29,7 +29,7 @@ class DispatchDepositWebhookCommandhandler implements CommandHandlerInterface
      */
     public function process(CommandInterface $command): Result
     {
-        $response = $this->http_client->acceptJson()->post(app_env("DJEKANOO_DEPOSIT_URL"), [
+        $response = $this->http_client->acceptJson()->post(app_env("DJEKANOO_TRANSFER_URL"), [
             "transaction" => $command->transaction,
             "amount" => $command->amount,
             "status" => $command->status == "SUCCES" ? "completed" : "failed",
