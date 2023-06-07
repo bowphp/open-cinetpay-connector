@@ -1,13 +1,6 @@
 name: Tests
 
-on:
-  push:
-    branches:
-      - master
-      - '*.x'
-  pull_request:
-  schedule:
-    - cron: '0 0 * * *'
+on: [ push, pull_request ]
 
 permissions:
   contents: read
@@ -31,17 +24,6 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, pdo, pdo_mysql, intl, zip, xml, json, pdo_sqlite, openssl
           coverage: none
-
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 3306
-          container port: 3306
-          character set server: 'utf8mb4'
-          collation server: 'utf8mb4_general_ci'
-          mysql version: '5.7'
-          mysql database: 'test'
-          mysql root password: 'secret'
 
       - name: Install dependencies for PHP
         run: composer update --prefer-dist --no-progress

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Commands;
+namespace App\CommandHandlers;
 
 use Prewk\Result\Ok;
 use Prewk\Result\Err;
+use Ramsey\Uuid\Uuid;
 use Bow\Http\Client\HttpClient;
 use Bow\CQRS\Command\CommandInterface;
-use Bow\CQRS\Command\CommandHandlerInterface;
+use App\Commands\ExecuteTransferCommand;
 use Bow\Http\Exception\BadRequestException;
+use Bow\CQRS\Command\CommandHandlerInterface;
 use Bow\Http\Exception\InternalServerErrorException;
 
 class ExecuteTransferCommandHandler implements CommandHandlerInterface
@@ -33,12 +35,13 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
         $token = $this->generateToken();
 
         $this->createCustomer($command, $token);
-    
+        $session = (string) Uuid::uuid4();
+
         $payload = [
             "prefix" => $command->phone->prefix,
             "phone" => $command->phone->number,
             "amount" => (int) $command->amount,
-            "notify_url" => route("transfer.webhook", true),
+            "notify_url" => route("transfer.webhook", compact('session'), true),
             "client_transaction_id" => $command->transaction,
             "payment_method" => $command->method,
         ];

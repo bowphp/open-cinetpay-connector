@@ -2,11 +2,27 @@
 
 namespace App\Controllers;
 
-use App\Controllers\Controller;
 use Bow\Http\Request;
+use App\Controllers\Controller;
+use Bow\CQRS\Command\CommandBus;
+use App\Services\CinetpayService;
+use App\Commands\DispatchDepositWebhookCommand;
+use App\Commands\DispatchTransferWebhookCommand;
 
 class WebhookController extends Controller
 {
+    /**
+     * WebhookController constructor
+     *
+     * @param CinetpayService $cinetpay_service
+     * @param CommandBus $commandBus
+     */
+    public function __construct(
+        private CinetpayService $cinetpay_service,
+        private CommandBus $commandBus
+    ) {
+    }
+
     /**
      * Process the deposit webhook
      *
@@ -16,6 +32,23 @@ class WebhookController extends Controller
     public function processDepositWebhook(
         Request $request
     ) {
+        $attributes = $request->all();
+
+        $this->cinetpay_service->checkHmacToken(
+            (string) $request->getHeader("X-Token"),
+            $attributes
+        );
+
+        $result = $this->commandBus->execute(
+            new DispatchDepositWebhookCommand(
+                $attributes["cpm_trans_id"],
+                $attributes["cpm_error_message"],
+                $attributes["cpm_amount"],
+                $attributes,
+            )
+        );
+
+        return $result->unwrap();
     }
 
     /**
@@ -27,5 +60,22 @@ class WebhookController extends Controller
     public function processTransferWebhook(
         Request $request
     ) {
+        $attributes = $request->all();
+
+        $this->cinetpay_service->checkHmacToken(
+            (string) $request->getHeader("X-Token"),
+            $attributes
+        );
+
+        $result = $this->commandBus->execute(
+            new DispatchTransferWebhookCommand(
+                $attributes["cpm_trans_id"],
+                $attributes["cpm_error_message"],
+                $attributes["cpm_amount"],
+                $attributes,
+            )
+        );
+
+        return $result->unwrap();
     }
 }
