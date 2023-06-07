@@ -16,7 +16,7 @@ class DispatchDepositWebhookCommandhandler implements CommandHandlerInterface
         public HttpClient $http_client
     ) {
         $this->http_client->addHeaders([
-            "X-Api-Key" => app_env("DJEKANOO_API_KEY"),
+            "X-Api-Key" => app_env("NOTIFICATION_APP_API_KEY"),
             "User-Agent" => app_env("APP_NAME"),
         ]);
     }
@@ -29,14 +29,11 @@ class DispatchDepositWebhookCommandhandler implements CommandHandlerInterface
      */
     public function process(CommandInterface $command): Result
     {
-        $response = $this->http_client->acceptJson()->post(app_env("DJEKANOO_DEPOSIT_URL"), [
+        $response = $this->http_client->acceptJson()->post(app_env("NOTIFICATION_APP_DEPOSIT_URL"), [
             "transaction" => $command->transaction,
             "amount" => $command->amount,
             "status" => $command->status == "SUCCES" ? "completed" : "failed",
-            "provider" => [
-                "name" => "cinetpay",
-                "data" => $command->provider_data
-            ]
+            "provider_data" => $command->provider_data
         ]);
 
         if ($response->statusCode() !== 200) {
