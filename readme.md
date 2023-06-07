@@ -1,3 +1,3 @@
-djekanoo-cinetpay-connector
+oepn-cinetpay-connector
 
-Djekanoo Cinetpay Connector
+Sandalone Cinetpay Connector
