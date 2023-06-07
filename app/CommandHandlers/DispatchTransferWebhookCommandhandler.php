@@ -33,10 +33,7 @@ class DispatchTransferWebhookCommandhandler implements CommandHandlerInterface
             "transaction" => $command->transaction,
             "amount" => $command->amount,
             "status" => $command->status == "SUCCES" ? "completed" : "failed",
-            "provider" => [
-                "name" => "cinetpay",
-                "data" => $command->provider_data
-            ]
+            "provider_data" => $command->provider_data,
         ]);
 
         if ($response->statusCode() !== 200) {
