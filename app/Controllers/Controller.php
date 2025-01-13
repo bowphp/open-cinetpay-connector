@@ -107,7 +107,7 @@ class Controller
      */
     public function table(string $name, ?string $connexion = null): QueryBuilder
     {
-        return table($name, $connexion);
+        return db_table($name, $connexion);
     }
 
     /**

@@ -55,8 +55,10 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
 
         if ($response->statusCode() !== 200) {
             $error = $response->toArray();
+
             if (isset($error["message"]) && $error["message"] == "INSUFFICIENT_BALANCE") {
-                // send telegram message
+                // Send telegram message
+                // Notifiy business for insufficient balance
             }
 
             return new Err(
