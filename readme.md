@@ -1,3 +1,3 @@
-oepn-cinetpay-connector
+# Open-cinetpay-connector
 
 Sandalone Cinetpay Connector
