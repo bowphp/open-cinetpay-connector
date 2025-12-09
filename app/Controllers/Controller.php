@@ -87,30 +87,6 @@ class Controller
     }
 
     /**
-     * Get Database Instance
-     *
-     * @param ?string $name
-     * @param ?callable $cb
-     * @return Database
-     */
-    public function db(?string $name = null, ?callable $cb = null)
-    {
-        return call_user_func_array('db', func_get_args());
-    }
-
-    /**
-     * Alias of table
-     *
-     * @param $name
-     * @param string $connexion
-     * @return QueryBuilder
-     */
-    public function table(string $name, ?string $connexion = null): QueryBuilder
-    {
-        return db_table($name, $connexion);
-    }
-
-    /**
      * Get last insert ID for auto increment
      *
      * @return mixed
