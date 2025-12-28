@@ -11,7 +11,7 @@ class TransferTransctionValidationRequest extends RequestValidation
      *
      * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             "transaction" => "required",
@@ -27,7 +27,7 @@ class TransferTransctionValidationRequest extends RequestValidation
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             "transaction" => [

@@ -11,7 +11,7 @@ class SessionValidationRequest extends RequestValidation
      *
      * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             "session" => "require|regex:^([a-z0-9]+\-){4}[a-z0-9]+$"
@@ -23,7 +23,7 @@ class SessionValidationRequest extends RequestValidation
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             "session" => [
