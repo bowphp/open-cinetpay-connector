@@ -3,13 +3,12 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
-use App\Controllers\Controller;
 use Bow\CQRS\Command\CommandBus;
 use App\Services\CinetpayService;
 use App\Commands\DispatchDepositWebhookCommand;
 use App\Commands\DispatchTransferWebhookCommand;
 
-class WebhookController extends Controller
+class WebhookController
 {
     /**
      * WebhookController constructor
@@ -29,9 +28,8 @@ class WebhookController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function processDepositWebhook(
-        Request $request
-    ) {
+    public function processDepositWebhook(Request $request): mixed
+    {
         $attributes = $request->all();
 
         $this->cinetpay_service->checkHmacToken(
@@ -57,9 +55,8 @@ class WebhookController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function processTransferWebhook(
-        Request $request
-    ) {
+    public function processTransferWebhook(Request $request): mixed
+    {
         $attributes = $request->all();
 
         $this->cinetpay_service->checkHmacToken(

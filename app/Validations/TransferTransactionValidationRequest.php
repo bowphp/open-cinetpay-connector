@@ -4,7 +4,7 @@ namespace App\Validations;
 
 use Bow\Validation\RequestValidation;
 
-class TransferTransctionValidationRequest extends RequestValidation
+class TransferTransactionValidationRequest extends RequestValidation
 {
     /**
      * Validation rules

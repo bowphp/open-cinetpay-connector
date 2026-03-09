@@ -10,7 +10,6 @@ use Bow\CQRS\Command\CommandInterface;
 use App\Commands\ExecuteTransferCommand;
 use Bow\Http\Exception\BadRequestException;
 use Bow\CQRS\Command\CommandHandlerInterface;
-use Bow\Http\Exception\InternalServerErrorException;
 
 class ExecuteTransferCommandHandler implements CommandHandlerInterface
 {
@@ -81,7 +80,7 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
      *
      * @return string
      */
-    private function generateToken()
+    private function generateToken(): string
     {
         $token = cache("token");
 
@@ -126,9 +125,9 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
      *
      * @param ExecuteTransferCommand $command
      * @param string $token
-     * @return void
+     * @return bool
      */
-    private function createCustomer(ExecuteTransferCommand $command, string $token)
+    private function createCustomer(ExecuteTransferCommand $command, string $token): bool
     {
         $content = [
             "prefix" => $command->phone->prefix,
@@ -146,7 +145,7 @@ class ExecuteTransferCommandHandler implements CommandHandlerInterface
 
         if ($response->statusCode() !== 200) {
             throw new BadRequestException(
-                "Cannt create the customer on cinetpay"
+                "Cannot create the customer on cinetpay"
             );
         }
 

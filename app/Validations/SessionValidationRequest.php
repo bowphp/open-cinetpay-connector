@@ -14,7 +14,7 @@ class SessionValidationRequest extends RequestValidation
     protected function rules(): array
     {
         return [
-            "session" => "require|regex:^([a-z0-9]+\-){4}[a-z0-9]+$"
+            "session" => "required|regex:^([a-z0-9]+\\-){4}[a-z0-9]+$"
         ];
     }
 
@@ -27,7 +27,7 @@ class SessionValidationRequest extends RequestValidation
     {
         return [
             "session" => [
-                "require" => "The session id is require",
+                "required" => "The session id is required",
                 "regex" => "The session id {session} is malformed"
             ]
         ];

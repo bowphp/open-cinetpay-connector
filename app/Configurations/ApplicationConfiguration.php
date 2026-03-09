@@ -11,8 +11,8 @@ use App\Commands\DispatchDepositWebhookCommand;
 use App\Commands\DispatchTransferWebhookCommand;
 use App\CommandHandlers\ExecuteDepositCommandHandler;
 use App\CommandHandlers\ExecuteTransferCommandHandler;
-use App\CommandHandlers\DispatchDepositWebhookCommandhandler;
-use App\CommandHandlers\DispatchTransferWebhookCommandhandler;
+use App\CommandHandlers\DispatchDepositWebhookCommandHandler;
+use App\CommandHandlers\DispatchTransferWebhookCommandHandler;
 
 class ApplicationConfiguration extends Configuration
 {
@@ -27,8 +27,8 @@ class ApplicationConfiguration extends Configuration
         Registration::commands([
             ExecuteDepositCommand::class => ExecuteDepositCommandHandler::class,
             ExecuteTransferCommand::class => ExecuteTransferCommandHandler::class,
-            DispatchDepositWebhookCommand::class => DispatchDepositWebhookCommandhandler::class,
-            DispatchTransferWebhookCommand::class => DispatchTransferWebhookCommandhandler::class,
+            DispatchDepositWebhookCommand::class => DispatchDepositWebhookCommandHandler::class,
+            DispatchTransferWebhookCommand::class => DispatchTransferWebhookCommandHandler::class,
         ]);
     }
 
