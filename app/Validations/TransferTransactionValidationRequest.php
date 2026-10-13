@@ -15,7 +15,7 @@ class TransferTransactionValidationRequest extends RequestValidation
     {
         return [
             "transaction" => "required",
-            "amount" => "required",
+            "amount" => "required|numeric",
             "method" => "required",
             "phone_prefix" => "required|numeric",
             "phone_number" => "required|numeric",

@@ -68,7 +68,7 @@ class ErrorHandle extends BaseErrorHandler
         }
 
         if (app_env("APP_ENV") != "production") {
-            $response["trace"] = $exception->getTrace();
+            $response["trace"] = $exception->getTraceAsString();
         }
 
         die(json($response, $status));
