@@ -4,21 +4,21 @@ namespace App\Validations;
 
 use Bow\Validation\RequestValidation;
 
-class DepositTransctionValidationRequest extends RequestValidation
+class TransferTransactionValidationRequest extends RequestValidation
 {
     /**
      * Validation rules
      *
      * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             "transaction" => "required",
-            "amount" => "required",
-            "currency" => "required",
-            "phone_number" => "required|numeric",
+            "amount" => "required|numeric",
+            "method" => "required",
             "phone_prefix" => "required|numeric",
+            "phone_number" => "required|numeric",
         ];
     }
 
@@ -27,7 +27,7 @@ class DepositTransctionValidationRequest extends RequestValidation
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             "transaction" => [
@@ -39,13 +39,8 @@ class DepositTransctionValidationRequest extends RequestValidation
             "currency" => [
                 "required" => "The currency is require"
             ],
-            "phone_prefix" => [
-                "required" => "The phone_prefix is require",
-                "numeric" => "The phone_prefix should be a numeric",
-            ],
-            "phone_number" => [
-                "required" => "The phone_number is require",
-                "numeric" => "The phone_number should be a numeric",
+            "method" => [
+                "required" => "The method is require"
             ],
         ];
     }

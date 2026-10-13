@@ -10,7 +10,7 @@ use Bow\CQRS\Command\CommandInterface;
 use Bow\Http\Exception\BadRequestException;
 use Bow\CQRS\Command\CommandHandlerInterface;
 
-class DispatchDepositWebhookCommandhandler implements CommandHandlerInterface
+class DispatchDepositWebhookCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         public HttpClient $http_client
